@@ -1,48 +1,31 @@
 package com.animals.safety.screens
 
 import android.content.Context
-import android.widget.Toast
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.animals.safety.R
@@ -200,7 +183,6 @@ fun verifyAndCreateAnimal(
   return true
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CreateAnimal(
   modifier: Modifier = Modifier,
@@ -215,100 +197,15 @@ private fun CreateAnimal(
   breed: Breed,
   onBreedChanged: (Breed) -> Unit
 ) {
-
-  val context = LocalContext.current
-
   val scrollState = rememberScrollState()
 
-  var expanded by remember { mutableStateOf(false) }
-  MaterialTheme(
-    colorScheme = MaterialTheme.colorScheme.copy(surface = Color(0xFFF3FBFF))
+  Column(
+    modifier = modifier
+      .padding(bottom = 88.dp, top = 16.dp, start = 16.dp, end = 16.dp)
+      .fillMaxSize()
+      .verticalScroll(scrollState)
   ) {
-    Column(
-      modifier = modifier
-        .background(color = Color(0xFFF3FBFF))
-        .padding(bottom = 88.dp, top = 16.dp, start = 16.dp, end = 16.dp)
-        .fillMaxSize()
-        .fillMaxWidth()
-        .verticalScroll(scrollState),
-      verticalArrangement = Arrangement.spacedBy(20.dp)
-    ) {
-      //TODO: A compléter
-      OutlinedTextField(
-        value = name,
-        onValueChange = {
-          onNameChanged(it)
-        },
-        //label = { Text(text = stringResource(id = R.string.hint_name)) },
-        placeholder = { Text(text = stringResource(id = R.string.hint_name)) },
-        maxLines = 1,
-      )
-
-      ExposedDropdownMenuBox(
-        expanded = expanded,
-        onExpandedChange = {
-          expanded = !expanded
-        }
-
-      ) {
-        OutlinedTextField(
-          value = stringResource(breed.translatedName),
-          label = { Text(text = stringResource(id = R.string.hint_breed)) },
-          onValueChange = {},
-          readOnly = true,
-          trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-          modifier = Modifier.menuAnchor(),
-          maxLines = 1
-        )
-
-        ExposedDropdownMenu(
-          expanded = expanded,
-          onDismissRequest = { expanded = false }
-        ) {
-          Breed.entries.forEach { item ->
-            DropdownMenuItem(
-              text = { Text(text = stringResource(item.translatedName)) },
-              onClick = {
-                onBreedChanged(item)
-                expanded = false
-                Toast.makeText(context, item.translatedName, Toast.LENGTH_SHORT).show()
-              }
-            )
-          }
-        }
-      }
-
-      OutlinedTextField(
-        value = age,
-        onValueChange = {
-          onAgeChanged(it)
-        },
-        //label = { Text(text = stringResource(id = R.string.hint_age)) },
-        placeholder = { Text(text = stringResource(id = R.string.hint_age)) },
-        maxLines = 1
-      )
-
-      OutlinedTextField(
-        value = weight,
-        onValueChange = {
-          onWeightChanged(it)
-        },
-        //label = { Text(text = stringResource(id = R.string.hint_weight)) },
-        placeholder = { Text(text = stringResource(id = R.string.hint_weight)) },
-        maxLines = 1
-      )
-
-      OutlinedTextField(
-        value = height,
-        onValueChange = {
-          onHeightChanged(it)
-        },
-        //label = { Text(text = stringResource(id = R.string.hint_height)) },
-        placeholder = { Text(text = stringResource(id = R.string.hint_height)) },
-        maxLines = 1
-      )
-
-    }
+    //TODO: A compléter
   }
 }
 
